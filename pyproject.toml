@@ -8,6 +8,8 @@ dependencies = [
     "matplotlib>=3.11.0",
     "opencv-python>=5.0.0.93",
     "pandas>=3.0.3",
+    "pygame>=2.6.1",
+    "pynput>=1.8.2",
     "torch>=2.13.0",
     "torchvision>=0.28.0",
 ]

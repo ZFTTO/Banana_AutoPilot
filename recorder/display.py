@@ -7,7 +7,7 @@ from recorder.utils import FpsCounter
 class Overlay:
     def __init__(self):
         self._rec_flash_until = 0.0
-        self._rec_flash_text = "REC"
+        self._rec_flash_text = "●REC"
         self._font = cv2.FONT_HERSHEY_SIMPLEX
         self._font_scale = 0.6
         self._font_color = (255, 255, 255)
@@ -24,7 +24,7 @@ class Overlay:
         cv2.putText(frame, f"FPS: {fps:.2f}", (10, 50), 
                     self._font, self._font_scale, self._font_color, 2)
         
-        status = "REC" if recording else "IDLE"
+        status = "●REC" if recording else "IDLE"
         color = self._rec_color if recording else self._idle_color
         cv2.putText(frame, status, (w - 50, 30),
                     self._font, self._font_scale, color, 2)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .esp32 import ESP32Config
-from .controller import controllerConfig
+from .controller import ControllerConfig
 from dataclasses import dataclass, field
 from typing import Literal
 
@@ -10,7 +10,7 @@ from typing import Literal
 class RecorderConfig:
     esp32: ESP32Config = field(default_factory = ESP32Config)
 
-    controller: controllerConfig = field(default_factory = controllerConfig)
+    controller: ControllerConfig = field(default_factory = ControllerConfig)
 
     # ── Controller ──────────────────────────────────────────────────
     control_mode: Literal["keyboard", "switch"] = "keyboard"

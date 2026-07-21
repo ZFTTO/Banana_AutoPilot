@@ -28,3 +28,4 @@ class ESP32Config:
         return (
             f"ws://{self.host}:{self.ws_port}{self.ws_path}"
         )
+    

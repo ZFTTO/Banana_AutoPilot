@@ -12,7 +12,7 @@ class KeyboardConfig:
     key_steer_right: str = "d"
 
     key_toggle_record: str = "r"
-    key_exit: str = "esc"
+    key_exit: str = "e"
 
 @dataclass 
 class SwitchConfig:
@@ -21,8 +21,8 @@ class SwitchConfig:
     switch_axis_throttle: int = 1
     switch_axis_steering: int = 0
 
-    switch_btn_toggle_record: int = 0
-    switch_btn_toggle_exit: int = 1
+    switch_btn_toggle_record: int = 1
+    switch_btn_toggle_exit: int = 0
 
 @dataclass
 class ControllerConfig:

@@ -50,18 +50,21 @@ class KeyboardController(Controller):
         if not pygame.get_init():
             pygame.init()
 
-            try:
-                self._kcode_up = pygame.key.key_code(self._config.keyboard.key_throttle_up)
-                self._kcode_down = pygame.key.key_code(self._config.keyboard.key_throttle_down)
-                self._kcode_left = pygame.key.key_code(self._config.keyboard.key_steer_left)
-                self._kcode_right = pygame.key.key_code(self._config.keyboard.key_steer_right)
-                self._kcode_record = pygame.key.key_code(self._config.keyboard.key_toggle_record)
-                self._kcode_exit = pygame.key.key_code(self._config.keyboard.key_exit)
-            except ValueError as ecx:
-                logger.error(f"Invalid key configuration: {ecx}")
-            
-            self._initialized = True
-            logger.info("Keyboard controller initialized.")
+        if pygame.display.get_surface() is None:
+            pygame.display.set_mode((1, 1))
+
+        try:
+            self._kcode_up = pygame.key.key_code(self._config.keyboard.key_throttle_up)
+            self._kcode_down = pygame.key.key_code(self._config.keyboard.key_throttle_down)
+            self._kcode_left = pygame.key.key_code(self._config.keyboard.key_steer_left)
+            self._kcode_right = pygame.key.key_code(self._config.keyboard.key_steer_right)
+            self._kcode_record = pygame.key.key_code(self._config.keyboard.key_toggle_record)
+            self._kcode_exit = pygame.key.key_code(self._config.keyboard.key_exit)
+        except ValueError as ecx:
+            logger.error(f"Invalid key configuration: {ecx}")
+        
+        self._initialized = True
+        logger.info("Keyboard controller initialized.")
 
     def stop(self) -> None:
         if self._initialized:

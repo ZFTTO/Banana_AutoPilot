@@ -36,7 +36,7 @@ def main():
     print(config.esp32.stream_url)
     print(config.controller.keyboard.key_toggle_record)
 
-    ctrlconfig = ControllerConfig(control_mode="switch")
+    ctrlconfig = ControllerConfig(control_mode="keyboard")
     ctrl = create_controller(ctrlconfig)
 
     try:
@@ -47,8 +47,10 @@ def main():
             state = ctrl.poll()
             print(state)
 
-            if state.action == "toggle_exit":
+            if state.action == "toggle_exit" or state.action == "toggle_record":
                 running = False
+
+            
 
     finally:
         ctrl.stop()

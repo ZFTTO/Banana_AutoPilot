@@ -50,6 +50,9 @@ class KeyboardController(Controller):
         if not pygame.get_init():
             pygame.init()
 
+        # macOS:
+        # pygame.key.get_pressed() may not work unless SDL has an active display.
+        # Create a minimal hidden window when no display exists.
         if pygame.display.get_surface() is None:
             pygame.display.set_mode((1, 1))
 

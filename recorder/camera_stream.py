@@ -104,7 +104,7 @@ class CameraStream:
                 if next_b < 0:
                     break
 
-                jpeg_bytes = buf[payload_start: next_b].restrip(b"\r\n")
+                jpeg_bytes = buf[payload_start: next_b].rstrip(b"\r\n")
                 buf = buf[next_b: ]
 
                 if jpeg_bytes:
@@ -121,4 +121,3 @@ class CameraStream:
 def jpeg_to_cv_mat(jpeg_bytes: bytes) -> np.ndarray | None:
     arr = np.frombuffer(jpeg_bytes, dtype = np.uint8)
     return cv2.imdecode(arr, cv2.IMREAD_COLOR)
-                

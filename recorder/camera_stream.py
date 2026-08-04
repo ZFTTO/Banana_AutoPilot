@@ -1,3 +1,9 @@
+'''
+-s.start()
+-s.get_frame()
+-s.stop()
+-jpeg_to_cv_mat(jpeg_bytes: bytes) -> np.ndarray | None
+'''
 from __future__ import annotations
 
 import logging
@@ -15,8 +21,10 @@ class CameraStream:
     def __init__(self, stream_url: str, queue_maxsize: int = 8) -> None:
         self._url = stream_url
         self._queue: Queue[Optional[bytes]] = Queue(maxsize = queue_maxsize)
+
         self._thread: Optional[threading.Thread] = None
         self._running = threading.Event()
+
         self._stream = None
 
     def start(self) -> None:
@@ -29,7 +37,10 @@ class CameraStream:
 
     def stop(self) -> None:
         self._running.clear()
-        #self._stream.close()
+
+        if self._stream is not None:
+            self._stream.close()
+
         if self._thread is not None:
             self._thread.join(timeout = 2.0)
             while not self._queue.empty():
@@ -37,6 +48,7 @@ class CameraStream:
                     self._queue.get_nowait()
                 except Exception:
                     break
+
         logger.info("CameraStream stopped")
 
     def get_frame(self, timeout: float | None = 0.05) -> bytes | None:

@@ -1,3 +1,9 @@
+'''
+-c.start()
+-c.read()
+-c.stop()
+-create_controller(config: ControllerConfig) -> Controller
+'''
 from __future__ import annotations
 
 import logging 
@@ -29,8 +35,8 @@ class Controller(ABC):
         ...
 
     @abstractmethod
-    def poll(self) -> ControllerState:
-        """Poll the current state of the controller."""
+    def read(self) -> ControllerState:
+        """read the current state of the controller."""
         ...
     
 class KeyboardController(Controller):
@@ -75,7 +81,7 @@ class KeyboardController(Controller):
             self._initialized = False
             logger.info("Keyboard controller stopped.")
 
-    def poll(self) -> ControllerState:
+    def read(self) -> ControllerState:
         if not self._initialized:
             return ControllerState()
         
@@ -140,7 +146,7 @@ class SwitchController(Controller):
         self._initialized = False
         logger.info("Switch controller stopped.")
     
-    def poll(self) -> ControllerState:
+    def read(self) -> ControllerState:
         if not self._initialized or self._joystick is None:
             return ControllerState()
         

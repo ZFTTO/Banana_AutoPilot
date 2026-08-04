@@ -12,6 +12,7 @@ from recorder.overlay import Overlay
 from recorder.utils import FpsCounter
 from recorder.controller import Controller, create_controller
 from recorder.camera_stream import CameraStream, jpeg_to_cv_mat
+from recorder.websocket_client import WebsocketClient
 
 
 
@@ -27,11 +28,11 @@ logger = logger = logging.getLogger(__name__)
 banner = r"""
   _______   ________   ___   __    ________   ___   __    ________
 /_______/\ /_______/\ /__/\ /__/\ /_______/\ /__/\ /__/\ /_______/\
-\::: _  \ \\::: _  \ \\::\_\\  \ \\::: _  \ \\::\_\\  \ \\::: _  \ \
+\::: _  \ \\::: _  \ \\::`_\\  \ \\::: _  \ \\::`_\\  \ \\::: _  \ \
  \::\_\  \/_\::\_\  \ \\:. `-\  \ \\::\_\  \ \\:. `-\  \ \\::\_\  \ \
   \::  _  \ \\:: __  \ \\:. _    \ \\:: __  \ \\:. _    \ \\:: __  \ \
    \::\_\  \ \\:.\ \  \ \\. \`-\  \ \\:.\ \  \ \\. \`-\  \ \\:.\ \  \ \
- ___\_______\/ \__\/\__\/_\__\/ \__\/_\__\/\__\/ \__\/_\__\/_\__\/\__\/____   _________
+ ___\_______\/ \__\/\__\/_\__\/ `__\/_\__\/\__\/ \__\/_`__\/_\__\/\__\/____   _________
 /_______/\ /_/\/_/\ /________/\/_____/\ /_____/\ /_______/\/_/\     /_____/\ /________/\
 \::: _  \ \\:\ \:\ \\__.::.__\/\:::_ \ \\:::_ \ \\__.::._\/\:\ \    \:::_ \ \\__.::.__\/
  \::\_\  \ \\:\ \:\ \  \::\ \   \:\ \ \ \\:\_\ \ \  \::\ \  \:\ \    \:\ \ \ \  \::\ \
@@ -45,18 +46,19 @@ def main():
     print("-----------------------------")
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(3)
     try:
         s.connect(("192.168.4.1", 81))
-        print("connection: success")
-        print(banner)
+        print("connection success")
     except Exception as e:
-        print("connection: fail", e)
+        print("connection fail:", e)
     finally:
         s.close()
-        print("---finally close---")
+        print("finally close")
     
     print("-----------------------------")
 
+    print(banner)
 
     overlay = Overlay()
 
@@ -65,14 +67,12 @@ def main():
     screen = pygame.display.set_mode((320, 240))
     pygame.display.set_caption("Banana AutoPilot")
 
-
-
     ctrlconfig = ControllerConfig(control_mode = "switch")
     ctrl = create_controller(ctrlconfig)
 
     esp32config = ESP32Config()
-    
-    stream = CameraStream(stream_url = "http://192.168.4.1:81/stream", queue_maxsize = 8)
+    stream = CameraStream(stream_url = esp32config.stream_url, queue_maxsize = 8)
+    ws = WebsocketClient(ws_url = esp32config.ws_url, send_interval = 0.025)
 
 
 
@@ -81,16 +81,17 @@ def main():
         running = True
 
         stream.start()
+        ws.start()
 
         while running:
 
-
-            
-            state = ctrl.poll()
+            state = ctrl.read()
             v = stream.get_frame(timeout=1)
-            try:
+            ws.send_control(throttle = state.throttle, steering = state.steering)
+
+            if v is not None:
                 frame = jpeg_to_cv_mat(v)
-            except:
+            else:
                 frame = np.zeros((240, 320, 3), dtype=np.uint8)
             
             frame = overlay.draw(frame, session = "001", fps=30.0, recording=False, throttle=state.throttle, steering=state.steering)
@@ -110,6 +111,8 @@ def main():
         ctrl.stop()
 
         stream.stop()
+        ws.stop()
+
         logger.info("kill controller source")
 
 

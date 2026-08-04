@@ -53,7 +53,7 @@ def main():
         running = True
 
         while running:
-            state = ctrl.poll()
+            state = ctrl.read()
             print(state)
 
             if state.action == "toggle_exit" or state.action == "toggle_record":

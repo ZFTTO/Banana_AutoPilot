@@ -17,6 +17,7 @@ class CameraStream:
         self._queue: Queue[Optional[bytes]] = Queue(maxsize = queue_maxsize)
         self._thread: Optional[threading.Thread] = None
         self._running = threading.Event()
+        self._stream = None
 
     def start(self) -> None:
         if self._running.is_set():
@@ -28,6 +29,7 @@ class CameraStream:
 
     def stop(self) -> None:
         self._running.clear()
+        #self._stream.close()
         if self._thread is not None:
             self._thread.join(timeout = 2.0)
             while not self._queue.empty():
@@ -57,7 +59,7 @@ class CameraStream:
 
     def _poll(self) -> None:
         try:
-            stream = urllib.request.urlopen(self._url, timeout = 5.0)
+            self._stream = urllib.request.urlopen(self._url, timeout = 5.0)
         except (urllib.error.URLError, OSError) as exc:
             logger.error("Cannot open stream url: %s", exc)
             self._running.clear()
@@ -68,7 +70,7 @@ class CameraStream:
 
         while self._running.is_set():
             try:
-                chunk = stream.read(8192)
+                chunk = self._stream.read(8192)
             except Exception as exc:
                 logger.warning("Stream read error: %s", exc)
                 break
@@ -114,10 +116,13 @@ class CameraStream:
                     except Full:
                         self._queue.get_nowait()
                         self._queue.put_nowait(jpeg_bytes)
-                
-                stream.close()
-                self._running.clear()
+
+        # leave while loop, close stream and clear running flag      
+        self._stream.close()
+        self._running.clear()
 
 def jpeg_to_cv_mat(jpeg_bytes: bytes) -> np.ndarray | None:
+    if jpeg_bytes is None or len(jpeg_bytes) == 0:
+        return None
     arr = np.frombuffer(jpeg_bytes, dtype = np.uint8)
     return cv2.imdecode(arr, cv2.IMREAD_COLOR)

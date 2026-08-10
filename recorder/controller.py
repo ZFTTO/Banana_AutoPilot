@@ -1,4 +1,5 @@
 '''
+-c = create_controller()
 -c.start()
 -c.read()
 -c.stop()

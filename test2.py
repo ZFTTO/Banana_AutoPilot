@@ -67,7 +67,7 @@ def main():
     screen = pygame.display.set_mode((320, 240))
     pygame.display.set_caption("Banana AutoPilot")
 
-    ctrlconfig = ControllerConfig(control_mode = "switch")
+    ctrlconfig = ControllerConfig(control_mode = "keyboard")
     ctrl = create_controller(ctrlconfig)
 
     esp32config = ESP32Config()

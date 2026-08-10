@@ -1,4 +1,5 @@
 '''
+-s = CameraStream()
 -s.start()
 -s.get_frame()
 -s.stop()

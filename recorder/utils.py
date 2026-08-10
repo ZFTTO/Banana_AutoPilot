@@ -2,7 +2,7 @@ import time
 from dataclasses import dataclass
 
 
-def timestamp_ms() -> float:
+def monotonic_time() -> float:
     return time.perf_counter()
 
 
@@ -17,7 +17,7 @@ class FpsCounter:
     _fps: float = 0.0
 
     def tick(self) -> float:
-        now = timestamp_ms()
+        now = monotonic_time()
 
         if self._last is not None:
             dt = now - self._last

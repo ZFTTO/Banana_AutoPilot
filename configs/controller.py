@@ -12,7 +12,7 @@ class KeyboardConfig:
     key_steer_right: str = "d"
 
     key_toggle_record: str = "r"
-    key_exit: str = "e"
+    key_exit: str = "q"
 
 @dataclass 
 class SwitchConfig:

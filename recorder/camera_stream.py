@@ -1,5 +1,5 @@
 '''
--s = CameraStream()
+-s = CameraStream
 -s.start()
 -s.get_frame()
 -s.stop()
@@ -52,7 +52,7 @@ class CameraStream:
 
         logger.info("CameraStream stopped")
 
-    def get_frame(self, timeout: float | None = 0.05) -> bytes | None:
+    def get_frame(self, timeout: float | None = 0.5) -> bytes | None:
         try: 
             return self._queue.get(timeout = timeout)
         except Empty:

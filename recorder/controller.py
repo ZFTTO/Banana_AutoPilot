@@ -123,8 +123,8 @@ class SwitchController(Controller):
     def start(self) -> None:
         if self._initialized:
             return
-        if not pygame.get_init():
-            pygame.init()
+        #if not pygame.get_init():
+        #    pygame.init()
         if not pygame.joystick.get_init():
             pygame.joystick.init()
 

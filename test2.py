@@ -103,9 +103,7 @@ def main():
             pygame.display.flip()
 
             if state.action == "toggle_exit" or state.action == "toggle_record":
-                running = False
-
-            
+                running = False     
 
     finally:
         ctrl.stop()
@@ -114,9 +112,6 @@ def main():
         ws.stop()
 
         logger.info("kill controller source")
-
-
-
 
 if __name__ == "__main__":
     main()

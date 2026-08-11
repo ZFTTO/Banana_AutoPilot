@@ -1,3 +1,9 @@
+'''
+-d = DatasetWriter()
+-d.start()
+-d.write()
+-d.stop()
+'''
 from __future__ import annotations
 
 import csv
@@ -11,14 +17,14 @@ from recorder.utils import timestamp_iso, monotonic_time
 logger = logging.getLogger(__name__)
 
 
-class datasetWriter:
+class DatasetWriter:
     def __init__(self, root: str | Path) -> None:
         self._root = Path(root)
         self._session_dir: Optional[Path] = None
 
         self._images_dir: Optional[Path] = None
         self._csv_file: Optional[object] = None
-        self._csv_writer = Optional[csv.writer] = None
+        self._csv_writer: Optional[csv.writer] = None
 
         self._start_mono: float = 0.0
         self._received_frame_count: int = 0
@@ -87,7 +93,13 @@ class datasetWriter:
         except OSError as exc:
             logger.error("Failed to write image %s: %s", fname, exc)
 
-        self._csv_writer.writerow(self._received_frame_count, fname, f"{t:.06f}", f"{throttle}", f"{steering}")
+        self._csv_writer.writerow([
+            self._received_frame_count,
+            fname,
+            f"{t:.06f}",
+            f"{throttle}",
+            f"{steering}",
+        ])
 
         self._recorded_frame_count += 1
 
@@ -100,7 +112,7 @@ class datasetWriter:
         return self._session_dir is not None
 
     @property
-    def current_session_name(self) -> str | None:
+    def current_session_name(self) -> str:
         if self._session_dir is None:
-            return None
+            return ""
         return self._session_dir.name

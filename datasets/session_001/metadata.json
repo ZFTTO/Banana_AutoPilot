@@ -1,0 +1,9 @@
+{
+  "resolution": "QVGA (320x240)",
+  "fps": "variable (every received frame)",
+  "camera": "ESP32-S3 OV3660",
+  "driver": "DRV8833 (H-Bridge) + MG90S Servo",
+  "date": "2026-08-11T20:33:15",
+  "session_path": "datasets/session_001",
+  "total_frames": 95
+}

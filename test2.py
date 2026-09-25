@@ -8,11 +8,11 @@ from configs import RecorderConfig
 from configs import ControllerConfig
 from configs import ESP32Config
 
-from recorder.overlay import Overlay
-from recorder.utils import FpsCounter
-from recorder.controller import Controller, create_controller
-from recorder.camera_stream import CameraStream, jpeg_to_cv_mat
-from recorder.websocket_client import WebsocketClient
+from core.display import Display
+from core.utils import FpsCounter
+from core.controller import Controller, create_controller
+from core.camera_stream import CameraStream, jpeg_to_cv_mat
+from core.websocket_client import WebsocketClient
 
 
 
@@ -60,7 +60,7 @@ def main():
 
     print(banner)
 
-    overlay = Overlay()
+    overlay = Display()
 
     pygame.init()
 
@@ -87,14 +87,14 @@ def main():
 
             state = ctrl.read()
             v = stream.get_frame(timeout=1)
-            ws.send_control(throttle = state.throttle, steering = state.steering)
+            ws.send_control(throttle = state.command.throttle, steering = state.command.steering)
 
             if v is not None:
                 frame = jpeg_to_cv_mat(v)
             else:
                 frame = np.zeros((240, 320, 3), dtype=np.uint8)
             
-            frame = overlay.draw(frame, session = "001", fps=30.0, recording=False, throttle=state.throttle, steering=state.steering)
+            frame = overlay.draw(frame, session = "001", fps=30.0, recording=False, throttle=state.command.throttle, steering=state.command.steering)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             
             surface = pygame.surfarray.make_surface(frame.swapaxes(0,1))

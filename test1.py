@@ -7,9 +7,9 @@ import pygame
 from configs import RecorderConfig
 from configs import ControllerConfig
 
-from recorder.overlay import Overlay
-from recorder.utils import FpsCounter
-from recorder.controller import Controller, create_controller
+from core.display import Overlay
+from core.utils import FpsCounter
+from core.controller import Controller, create_controller
 
 
 import logging

@@ -1,0 +1,65 @@
+Banana AutoPilot Non-Commercial License 1.0
+
+Copyright (c) 2026 ZFTTO.
+
+1. Scope
+
+This license applies to the original code, documentation, notebooks and other
+materials in this repository that are made available under this license
+(the "Materials"). Separately licensed third-party materials are excluded.
+
+2. Permission for non-commercial use
+
+Subject to the conditions below, the copyright holders grant you a worldwide,
+royalty-free, non-exclusive permission to use, copy, modify and redistribute
+the Materials, including modified versions, solely for non-commercial purposes.
+Non-commercial purposes include personal learning, non-commercial teaching,
+experimentation and research that are not directed toward commercial advantage
+or monetary compensation.
+
+3. Commercial use requires separate permission
+
+You may not use, copy, modify or distribute the Materials for commercial purposes
+without prior written permission from the relevant copyright holders.
+Commercial purposes include selling or licensing the Materials; incorporating
+them into paid products or services; providing paid courses, training or
+consulting using the Materials; and using them in business operations or
+commercial research and development. Providing access free of charge does not
+make a use non-commercial if it serves a commercial purpose.
+
+4. Conditions of redistribution
+
+All copies and redistributions of the Materials or substantial portions of them
+must retain this license and the applicable copyright notices. Modified versions
+must clearly identify that changes have been made. You must not remove the
+non-commercial restriction or offer recipients commercial rights to the
+Materials without separate written permission from the relevant copyright
+holders. Your additions must not prevent recipients from exercising the
+non-commercial permissions granted here in the included Materials.
+
+5. Other rights and third-party materials
+
+No rights to trademarks or patents are granted by this license. Third-party
+libraries, assets and other separately licensed materials remain subject to
+their own licenses. This license grants only rights the copyright holders are
+entitled to grant. It does not restrict uses permitted independently by
+applicable law or rights previously granted under a separate license.
+
+6. Termination
+
+The permissions granted by this license terminate automatically if you violate
+its terms. Upon termination, you must stop exercising the permissions granted
+here unless the relevant copyright holders reinstate them in writing.
+
+7. Disclaimer of warranty and limitation of liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE MATERIALS ARE PROVIDED
+"AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
+
+For commercial permission, contact the maintainer through:
+https://github.com/ZFTTO/Banana_AutoPilot
